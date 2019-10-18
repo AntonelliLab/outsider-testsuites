@@ -20,5 +20,7 @@ r_github_packages:
   - antonellilab/outsider
   - antonellilab/outsider.devtools
   
+install: false
+  
 script:
   - Rscript -e "source('https://raw.githubusercontent.com/AntonelliLab/outsider-testsuites/master/run_test_suites.R')"
