@@ -17,10 +17,13 @@ for (suite_path in suite_paths) {
       }, error = function(e) {
         message(e)
         FALSE
-      }, warning = function(e) {
-        message(e)
-        FALSE
-      })
+      }
+      # Windows raises warning during `untar`
+      #, warning = function(e) {
+      #  message(e)
+      #  FALSE
+      #}
+      )
     res <- c(res, temp_res)
   } else {
     cat('.... no `script.R` found -- skipping\n')
