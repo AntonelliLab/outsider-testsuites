@@ -16,6 +16,7 @@ addons:
       - libapparmor-dev
   
 install:
+  - R -e "install.packages('remotes')"
   - R -e "remotes::install_github(repo = 'antonellilab/outsider.base')"
   - R -e "remotes::install_github(repo = 'antonellilab/outsider')"
   - R -e "remotes::install_github(repo = 'antonellilab/outsider.devtools')"
