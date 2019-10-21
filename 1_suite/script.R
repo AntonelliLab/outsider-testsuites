@@ -13,42 +13,34 @@ if (dir.exists(wd)) {
 dir.create(wd)
 
 # Module installations ----
+cat('.... install modules ....\n')
 repos <- c('dombennett/om..mafft', 'dombennett/om..trimal',
            'dombennett/om..raxml')
 service <- 'github'
 for (repo in repos) {
   if (!is_module_installed(repo = repo)) {
-    cat('Installing [', repo, ']....\n', sep = '')
-    module_install(repo = repo, service = service)
+    cat('.... .... [', repo, '] ....\n', sep = '')
+    module_install(repo = repo, service = service, force = TRUE,
+                   update = 'always', tag = 'latest', verbose = TRUE)
   }
 }
 
-# Download ----
-cat('Downloading test data ....\n')
-seqs_file <- file.path(wd, 'ex_seqs.fasta')
-if (!file.exists(seqs_file)) {
-  download.file(url = 'https://mafft.cbrc.jp/alignment/software/ex1.txt',
-                destfile = seqs_file)
-}
-
 # Alignment ----
-cat('Aligning sequence data ....\n')
+cat('.... align sequence data ....\n')
 mafft <- module_import(fname = 'mafft', repo = 'dombennett/om..mafft')
-al_file <- 'ex_al.fasta'
-# mafft will run on host computer
-mafft(arglist = c('--thread', '2', '--auto', seqs_file, '>', al_file),
-      outdir = wd)
+seqs_file <- file.path('1_suite', 'bromeliad_genera_matk.fasta')
+al_file <- file.path(wd, 'matk_al.fasta')
+mafft(arglist = c('--thread', '2', '--auto', seqs_file, '>', al_file))
 
 # Trimming ----
-cat('Trim alignment ....\n')
+cat('.... trim alignment ....\n')
 trimal <- module_import(fname = 'trimal', repo = 'dombennett/om..trimal')
-input_file <- file.path(wd, 'ex_al.fasta')
 output_file <- 'trimmed_al.phy'
-trimal(arglist = c('-in', input_file, '-out', output_file, '-automated1',
+trimal(arglist = c('-in', al_file, '-out', output_file, '-automated1',
                    '-phylip'), outdir = wd)
 
 # Phylogeny ----
-cat('Infer phylogeny ....\n')
+cat('.... infer phylogeny ....\n')
 raxml <- module_import(fname = 'raxml', repo = 'dombennett/om..raxml')
 input_file <- file.path(wd, output_file)
 seed_n <- round(runif(n = 1, min = 1, max = 99999))
@@ -57,17 +49,23 @@ raxml(arglist = c('-m', 'GTRGAMMA', '-s', input_file, '-p', seed_n, '-n',
       outdir = wd)
 
 # Check results ----
-cat('Check results ....\n')
-cat('.... results dir contents:')
+cat('.... check results ....\n')
+cat('.... .... results dir contents:\n')
 fls <- list.files(path = wd)
 for (fl in fls) {
-  cat('[', fl, ']\n')
+  cat('[', fl, ']\n', sep = '')
 }
+cat('.... .... best tree Newick (no branch lengths):\n')
+tree_txt <- readLines(con = file.path(wd, fls[grepl(pattern = 'bestTree',
+                                                    x = fls)]))[[1]]
+tree_txt <- gsub(pattern = ':[0-9\\.]+', replacement = '', x = tree_txt)
+cat(tree_txt, '\n')
 
 # Module uninstallations ----
+cat('.... uninstall modules ....\n')
 for (repo in repos) {
   if (is_module_installed(repo = repo)) {
-    cat('Uninstalling [', repo, ']....\n', sep = '')
+    cat('.... .... [', repo, ']....\n', sep = '')
     module_uninstall(repo = repo)
   }
 }

@@ -1,7 +1,7 @@
 start_time <- Sys.time()
-cat(cli::rule())
+cat(cli::rule(), '\n')
 cat('Running test suites (' , as.character(start_time), ') ....\n', sep = '')
-cat(cli::rule())
+cat(cli::rule(), '\n')
 suite_paths <- list.dirs(path = getwd(), recursive = FALSE)
 suite_paths <- suite_paths[grepl(pattern = 'suite', x = basename(suite_paths))]
 suite_paths <- sort(suite_paths)
@@ -12,7 +12,7 @@ for (suite_path in suite_paths) {
   if (file.exists(script)) {
     suite_env <- new.env()
     temp_res <- tryCatch(expr = {
-      source(file = script, echo = FALSE, local = suite_env, print.eval = FALSE)
+      #source(file = script, echo = FALSE, local = suite_env, print.eval = FALSE)
       TRUE
       }, error = function(e) {
         FALSE
@@ -21,14 +21,14 @@ for (suite_path in suite_paths) {
       })
     res <- c(res, temp_res)
   } else {
-    cat('.... no `script.R` found.\n')
+    cat('.... no `script.R` found -- skipping\n')
   }
 }
 end_time <- Sys.time()
 duration <- difftime(end_time, start_time, units = 'mins')
 cat('Complete. Duration: ', crayon::red(round(x = duration, digits = 3)),
     ' minutes.\n')
-cat(cli::rule())
+cat(cli::rule(), '\n')
 if (sum(res) != length(res)) {
   stop('Fail: Not all test suites completed successfully.', call. = FALSE)
 }
