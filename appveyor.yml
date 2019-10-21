@@ -1,0 +1,43 @@
+image: Windows Server 2019
+platform: x64
+
+init:
+  ps: |
+        $ErrorActionPreference = "Stop"
+        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+        Import-Module '..\appveyor-tool.ps1'
+
+install:
+  - cmd: git submodule update --init --recursive
+  - ps: Bootstrap
+
+cache:
+  - C:\RLibrary
+
+environment:
+  global:
+    R_ARCH: x64
+    WARNINGS_ARE_ERRORS: 1
+    NOT_CRAN: true
+    # env vars that may need to be set, at least temporarily, from time to time
+    # see https://github.com/krlmlr/r-appveyor#readme for details
+    USE_RTOOLS: true
+    R_REMOTES_STANDALONE: true
+  matrix:
+    - R_VERSION: stable
+    - R_VERSION: patched
+    - R_VERSION: devel
+
+build_script:
+  - ps: Write-host "`nInstall outsider package(s)`n" -foregroundcolor yellow
+  - Rscript install_deps.R
+  - ps: Write-host "`nSwitch to linux engine`n" -foregroundcolor yellow
+  - docker-switch-linux
+  
+test_script:
+  - ps: Write-host "`nRunning test suites`n" -foregroundcolor yellow
+  - Rscript run_test_suites.R
+
+on_failure:
+  - 7z a failure.zip *.Rcheck\*
+  - appveyor PushArtifact failure.zip
