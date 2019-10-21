@@ -14,13 +14,12 @@ addons:
   apt:
     packages:
       - libapparmor-dev
+
+r_github_packages:
+  - antonellilab/outsider.base
+  - antonellilab/outsider
+  - antonellilab/outsider.devtools
   
-install:
-  - R -e "install.packages('remotes')"
-  - R -e "remotes::install_github(repo = 'antonellilab/outsider.base')"
-  - R -e "remotes::install_github(repo = 'antonellilab/outsider')"
-  - R -e "remotes::install_github(repo = 'antonellilab/outsider.devtools')"
+install: skip
   
-script:
-  - pwd
-  - Rscript -e run_test_suites.R
+script: Rscript ./run_test_suites.R
