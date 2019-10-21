@@ -12,7 +12,7 @@ for (suite_path in suite_paths) {
   if (file.exists(script)) {
     suite_env <- new.env()
     temp_res <- tryCatch(expr = {
-      #source(file = script, echo = FALSE, local = suite_env, print.eval = FALSE)
+      source(file = script, echo = FALSE, local = suite_env, print.eval = TRUE)
       TRUE
       }, error = function(e) {
         FALSE
