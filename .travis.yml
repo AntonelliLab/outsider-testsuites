@@ -14,12 +14,7 @@ addons:
   apt:
     packages:
       - libapparmor-dev
-
-r_github_packages:
-  - antonellilab/outsider.base
-  - antonellilab/outsider
-  - antonellilab/outsider.devtools
   
-install: skip
+install: Rscript ./install_deps.R
   
 script: Rscript ./run_test_suites.R
