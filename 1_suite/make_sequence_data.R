@@ -11,6 +11,8 @@ selected <- drop_by_rank(phylota = selected, rnk = 'genus', n = 1)
 txids <- get_txids(phylota = selected, sid = selected@sids, rnk = 'genus')
 scnms <- get_tx_slot(phylota = selected, txid = txids, slt_nm = 'scnm')
 scnms <- scnms[!duplicated(scnms)]
+# random 10 genera (keep analysis fast)
+scnms <- sample(x = scnms, size = 10)
 # write to FASTA file with description as genus name
 outfile <- file.path('1_suite', 'bromeliad_genera_matk.fasta')
 write_sqs(phylota = selected, outfile = outfile, sid = names(scnms),
