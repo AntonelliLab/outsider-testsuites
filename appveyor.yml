@@ -27,6 +27,7 @@ environment:
     - R_VERSION: stable
     - R_VERSION: patched
     - R_VERSION: devel
+      PKGTYPE: source
 
 build_script:
   - ps: Write-host "`nInstall outsider package(s)`n" -foregroundcolor yellow
