@@ -1,13 +1,13 @@
 # Test suite for `outsider`
 
-[![Build Status](https://travis-ci.org/AntonelliLab/outsider-testsuites.svg?branch=master)](https://travis-ci.org/AntonelliLab/outsider-testsuites) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/AntonelliLab/outsider-testsuites?branch=master&svg=true)](https://ci.appveyor.com/project/DomBennett/outsider-testsuites)
+[![Build Status](https://travis-ci.org/ropensci/outsider-testsuites.svg?branch=master)](https://travis-ci.org/ropensci/outsider-testsuites) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/ropensci/outsider-testsuites?branch=master&svg=true)](https://ci.appveyor.com/project/DomBennett/outsider-testsuites)
 
 Runs a series of pipelines implementing multiple `outsider` modules in order to
 better assess the functionality of the package `outsider` as well as the piping
 of `outsider` modules and their various components.
 
 For more information on `outsider` visit its
-[webpage](https://antonellilab.github.io/outsider/).
+[webpage](https://ropensci.github.io/outsider/).
 
 ## Contributing
 
