@@ -1,6 +1,6 @@
 # Test suite for `outsider`
 
-[![Build Status](https://travis-ci.org/ropensci/outsider-testsuites.svg?branch=master)](https://travis-ci.org/ropensci/outsider-testsuites) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/ropensci/outsider-testsuites?branch=master&svg=true)](https://ci.appveyor.com/project/DomBennett/outsider-testsuites)
+[![Build Status](https://travis-ci.org/ropensci/outsider-testsuites.svg?branch=master)](https://travis-ci.org/ropensci/outsider-testsuites) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/ropensci/outsider-testsuites?branch=master&svg=true)](https://ci.appveyor.com/project/DomBennett/outsider-testsuites) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3614982.svg)](https://doi.org/10.5281/zenodo.3614982)
 
 Runs a series of pipelines implementing multiple `outsider` modules in order to
 better assess the functionality of the package `outsider` as well as the piping
